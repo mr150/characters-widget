@@ -11,11 +11,16 @@ function CharsList() {
 	), []);
 
   return (
-    <List
-      items={chars.results}
-      renderItem={renderChar}
-      className="p-4 m-0 list-none grid grid-cols-2 gap-2"
-    />
+    <>
+      {chars.error ?
+			 <p className="m-0 p-20 text-center text-xl text-gray-600 bg-gray-100">{chars.error}</p> :
+			 <List
+				 items={chars.results}
+				 renderItem={renderChar}
+				 className="p-4 m-0 list-none grid grid-cols-2 gap-4"
+			 />
+			}
+		</>
   );
 }
 

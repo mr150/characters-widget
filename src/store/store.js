@@ -1,14 +1,21 @@
 import {createStoreon} from 'storeon';
 
+const charsInit = {
+	info: {},
+	results: [],
+};
+
 function charsList(store) {
-  store.on('@init', () => ({chars: {
-		info: {},
-		results: [],
-	}}));
+  store.on('@init', () => ({chars: {...charsInit}}));
 
   store.on('chars/load', async (state, params) => {
 		try {
-			const response = await fetch('https://rickandmortyapi.com/api/character/');
+			const response = await fetch(
+				'https://rickandmortyapi.com/api/character/?' + (
+					params ? (new URLSearchParams(params).toString()) : ''
+				)
+			);
+
 			const json = await response.json();
 			store.dispatch('chars/update', json);
 		} catch(e) {
@@ -16,7 +23,7 @@ function charsList(store) {
 		}
 	});
 
-  store.on('chars/update', (state, data) => ({chars: data}));
+  store.on('chars/update', (state, data) => ({chars: {...charsInit, ...data}}));
 }
 
 function errors(store) {
