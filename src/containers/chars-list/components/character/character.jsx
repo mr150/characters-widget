@@ -1,15 +1,33 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import cn from 'classnames';
 
-function Character({item}) {
+function Character({item, detailed}) {
+  let imgSize = 100,
+      wrapperCss = 'flex-col items-center';
+
+  if(detailed) {
+		imgSize = 250;
+		wrapperCss = 'items-start';
+	}
+
   return (
-    // ссылка, потому что она доступнее из коробки чем div
-    // и можно было бы доработать открытие информации о персонаже в новой вкладке
-    <a href="#" className="block p-2 text-center no-underline text-stale-400">
-      <img className="mb-4" src={item.image} alt="" width="100" height="100"/>
-      <strong className="block">{item.name}</strong>
-    </a>
-  );
+    <div className={cn('flex flex-wrap gap-5', wrapperCss)}>
+			<img src={item.image} alt="" width={imgSize} height={imgSize}/>
+			{detailed ? (
+        <div className="sm:max-w-sm">
+          <strong className="block text-lg">{item.name}</strong>
+          <p>status: {item.status}</p>
+          <p>species: {item.species}</p>
+          <p>type: {item.type || 'None'}</p>
+          <p>gender: {item.gender}</p>
+					<p>origin: {item.origin?.name}</p>
+					<p>location: {item.location?.name}</p>
+				</div>
+			) : <strong>{item.name}</strong>
+			}
+		</div>
+	);
 }
 
 Character.propTypes = {

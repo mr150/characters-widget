@@ -1,12 +1,12 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-function List({items, renderItem, className}) {
+function List({items, renderItem, className, itemCssClass}) {
   return (
 		<ul className={className}>
-			{items.map(item => (
-				<li key={item.id} className="">
-          {renderItem(item)}
+			{items.map((item, i) => (
+				<li key={item.id} className={itemCssClass}>
+          {renderItem(item, i)}
 				</li>
 			))}
 		</ul>
@@ -14,7 +14,7 @@ function List({items, renderItem, className}) {
 }
 
 List.propTypes = {
-  items: propTypes.arrayOf(propTypes.object).isRequired,
+  items: propTypes.array.isRequired,
   renderItem: propTypes.func
 };
 

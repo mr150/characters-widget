@@ -17,11 +17,11 @@ function App() {
 				<h3 className="mt-0 text-center">Filter characters</h3>
 				<CharsFilter/>
       </section>
-			<section>
+			<section className="h-[32rem] overflow-auto">
 				<h3 className="sr-only">List of characters</h3>
 				<CharsList/>
       </section>
-    </article>
+		</article>
   );
 }
 
