@@ -7,18 +7,15 @@ import css from '../../constants/css';
 import {genders, statuses} from '../../constants/filters';
 
 function CharsFilter() {
-  const {dispatch} = useStoreon();
+  const {dispatch, filter} = useStoreon('filter');
 
 	const onChange = useCallback(
 		debounce((e) => {
-      dispatch('chars/load', new FormData(e.target.form));
-    }, 300), []
+      dispatch('filter/set', {...filter, [e.target.name]: e.target.value, page: 1});
+    }, 300), [filter]
   );
 
   return (
-    // если бы форма была более сложной, то можно было бы сделать ее полностью управляемой
-    // с контролем состояния. Но эта простая, поэтому решил получать из нее данные нативным способом.
-    // Такое решение кажется простым и кратким
     <form action="https://rickandmortyapi.com/api/character" onChange={onChange}>
       <Field label="name" cssClass="mb-4 mx-auto max-w-xs" hiddenLabel>
         <input className={css.input} type="text" name="name" placeholder="Name"/>

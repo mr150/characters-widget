@@ -1,11 +1,11 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-function List({items, renderItem, className, itemCssClass}) {
+function List({items, renderItem, cssClass, itemCssClass}) {
   return (
-		<ul className={className}>
+		<ul className={cssClass}>
 			{items.map((item, i) => (
-				<li key={item.id} className={itemCssClass}>
+				<li key={item.id || i} className={itemCssClass}>
           {renderItem(item, i)}
 				</li>
 			))}

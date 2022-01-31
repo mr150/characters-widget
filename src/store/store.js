@@ -6,7 +6,10 @@ const charsInit = {
 };
 
 function charsList(store) {
-  store.on('@init', () => ({chars: {...charsInit}}));
+  store.on('@init', () => ({
+		chars: {...charsInit},
+		filter: {page: 1}
+	}));
 
   store.on('chars/load', async (state, params) => {
 		try {
@@ -24,6 +27,10 @@ function charsList(store) {
 	});
 
   store.on('chars/update', (state, data) => ({chars: {...charsInit, ...data}}));
+  store.on('filter/set', (state, filter) => {
+		store.dispatch('chars/load', filter);
+		return {filter};
+	});
 }
 
 function errors(store) {

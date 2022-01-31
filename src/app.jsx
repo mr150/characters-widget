@@ -11,13 +11,13 @@ function App() {
   }, []);
 
   return (
-    <article className="border p-4">
+    <article className="border p-5">
 			<h2 className="sr-only">Characters widget</h2>
 			<section className="mb-8">
 				<h3 className="mt-0 text-center">Filter characters</h3>
 				<CharsFilter/>
       </section>
-			<section className="h-[32rem] overflow-auto">
+			<section className="h-[32rem] flex flex-col border">
 				<h3 className="sr-only">List of characters</h3>
 				<CharsList/>
       </section>
