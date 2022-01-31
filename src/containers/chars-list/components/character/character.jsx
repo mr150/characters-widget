@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import cn from 'classnames';
 
 function Character({item, detailed}) {
-  let imgSize = 100,
+	let imgSize = 76,
       wrapperCss = 'flex-col items-center';
 
   if(detailed) {

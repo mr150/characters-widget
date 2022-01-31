@@ -26,8 +26,8 @@ function Pagination({count, current, itemClick}) {
   const renderItem = useCallback(item => (
 		item ? <button
              className={cn(
-               item === current ? 'bg-blue-400' : 'cursor-pointer',
-               'py-1 px-2 border border-gray-300'
+               item === current ? 'bg-gray-800 text-[#fff]' : ' hover:bg-gray-300 cursor-pointer',
+               'py-1 px-2 border border-gray-300 transition-colors'
              )}
              onClick={(item !== current) ? (() => itemClick(item)) : null}
            >{item}</button> : '...'

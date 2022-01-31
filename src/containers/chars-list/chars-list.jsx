@@ -33,7 +33,7 @@ function CharsList() {
         toggleModal(false);
         setCurChar(item);
       }}
-			className="block p-2 text-center no-underline text-stale-400"
+			className="block p-2 sm:p-3 w-full text-center no-underline text-gray-900"
 		>
 			<Character item={item}/>
 		</a>
@@ -47,7 +47,8 @@ function CharsList() {
 				 <List
 					 items={chars.results}
 					 renderItem={renderChar}
-					 cssClass="py-4 px-0 m-0 grid grid-cols-2 gap-4 content-start list-none overflow-auto grow"
+					 cssClass="px-5 m-0 grid grid-cols-2 gap-3 content-start list-none overflow-auto grow"
+					 itemCssClass="flex border border-gray-300 transition-colors hover:border-gray-900"
 				 />
 				 <Modal hidden={modalHidden} onClose={cb.closeModal}>
 					 <Character item={currentChar} detailed/>

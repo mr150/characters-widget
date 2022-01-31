@@ -126,6 +126,8 @@
 
 @layer components {
 	.btn {
+		@apply transition-colors;
+
 		display: inline-block;
 		margin: 0;
 		box-sizing: border-box;

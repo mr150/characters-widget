@@ -9,7 +9,7 @@ function Modal({onClose, hidden, children}){
       <div className='mx-auto mt-6 w-max max-w-full bg-gray-100 shadow-xl' onClick={stopPropagation}>
         <header className='flex justify-between bg-gray-200 items-center py-5 px-6 gap-4 border-gray-600 border-b'>
           <strong className='m-0 text-lg'>Character info</strong>
-          <button className="btn btn--plus rotate-45" onClick={onClose}>
+          <button className="btn btn--plus text-gray-600 hover:text-gray-900 rotate-45" onClick={onClose}>
 						<span className="sr-only">Close</span>
 					</button>
         </header>
