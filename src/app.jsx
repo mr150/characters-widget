@@ -17,7 +17,7 @@ function App() {
 				<h3 className="mt-0 text-center">Filter characters</h3>
 				<CharsFilter/>
       </section>
-			<section className="h-[32rem] flex flex-col border">
+			<section className="h-[32rem] border">
 				<h3 className="sr-only">List of characters</h3>
 				<CharsList/>
       </section>

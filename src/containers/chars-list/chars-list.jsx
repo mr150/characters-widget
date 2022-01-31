@@ -3,12 +3,14 @@ import {useStoreon} from 'storeon/react';
 import Character from './components/character';
 import List from '../../components/list';
 import Modal from '../../components/modal';
+import Spinner from '../../components/spinner';
 // думал сделать его контейнером и вынести туда работу с filter из стора, но по смыслу
 // он больше показался глупым компонентом
 import CharsPaginator from './components/chars-paginator';
 
 function CharsList() {
-  const {chars, filter, dispatch} = useStoreon('chars', 'filter');
+  const {chars, filter, dispatch, isLoading} =
+        useStoreon('chars', 'filter', 'isLoading');
   // показалось проще хранить выбранного персонажа и показ модалки во внутреннем состоянии
   // в других компонентах они не нужны, а изменяются в одну строку
   const [modalHidden, toggleModal] = useState(true);
@@ -41,7 +43,7 @@ function CharsList() {
     <>
       {chars.error ?
 			 <p className="m-0 p-20 text-center text-xl text-gray-600 bg-gray-100">{chars.error}</p> :
-       <>
+       <Spinner wrapperCssClass="h-full flex flex-col" active={isLoading}>
 				 <List
 					 items={chars.results}
 					 renderItem={renderChar}
@@ -54,7 +56,7 @@ function CharsList() {
            charsCount={chars.info?.count} count={chars.info?.pages}
            current={filter.page} itemClick={cb.goPage}
          />
-			 </>
+			 </Spinner>
 			}
 		</>
   );

@@ -12,6 +12,8 @@ function charsList(store) {
 	}));
 
   store.on('chars/load', async (state, params) => {
+		store.dispatch('loading', true);
+
 		try {
 			const response = await fetch(
 				'https://rickandmortyapi.com/api/character/?' + (
@@ -23,6 +25,8 @@ function charsList(store) {
 			store.dispatch('chars/update', json);
 		} catch(e) {
 			store.dispatch('errors/load', 'Something went wrong');
+		} finally {
+			store.dispatch('loading', false);
 		}
 	});
 
@@ -31,6 +35,8 @@ function charsList(store) {
 		store.dispatch('chars/load', filter);
 		return {filter};
 	});
+
+  store.on('loading', (state, data) => ({isLoading: data}));
 }
 
 function errors(store) {

@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback} from 'react';
 import propTypes from 'prop-types';
 
 function Modal({onClose, hidden, children}){

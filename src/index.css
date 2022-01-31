@@ -147,11 +147,9 @@
 
 	.btn--plus::before,
 	.btn--plus::after {
+		@apply inset-0;
+
 		position: absolute;
-		top: 0px;
-		right: 0px;
-		bottom: 0px;
-		left: 0px;
 		margin: auto;
 		background-color: currentColor;
 		content: '';
@@ -165,5 +163,23 @@
 	.btn--plus::after {
 		width: 100%;
 		height: 15%;
+	}
+
+	.loader::after {
+		@apply inset-0 w-16 h-16 border-t-8 border-l-4;
+
+		position: absolute;
+		margin: auto;
+		border-radius: 50%;
+		z-index: 1;
+	}
+
+	.loader::before {
+		@apply inset-0;
+
+		position: absolute;
+		background: white;
+		opacity: 60%;
+		z-index: 1;
 	}
 }
