@@ -21,10 +21,13 @@ function charsList(store) {
 				)
 			);
 
+			if(!response.ok) throw response.status;
+
 			const json = await response.json();
 			store.dispatch('chars/update', json);
+			store.dispatch('errors/reset');
 		} catch(e) {
-			store.dispatch('errors/load', 'Something went wrong');
+			store.dispatch('errors/load', e);
 		} finally {
 			store.dispatch('loading', false);
 		}
@@ -41,7 +44,16 @@ function charsList(store) {
 
 function errors(store) {
   store.on('@init', () => ({error: ''}));
-  store.on('errors/load', (state, data) => ({error: data}));
+  store.on('errors/load', (state, code) => {
+		let error = '';
+
+		if(code >= 400 && code < 500) error = 'Nothing found';
+		else if(code >= 500) error = 'Internal server error. Try again later';
+		else error = 'Something went wrong. Try again later';
+
+		return {error};
+	});
+  store.on('errors/reset', () => ({error: ''}));
 }
 
 export default createStoreon([

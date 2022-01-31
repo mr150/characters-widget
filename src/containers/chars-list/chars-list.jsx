@@ -9,8 +9,8 @@ import Spinner from '../../components/spinner';
 import CharsPaginator from './components/chars-paginator';
 
 function CharsList() {
-  const {chars, filter, dispatch, isLoading} =
-        useStoreon('chars', 'filter', 'isLoading');
+  const {chars, filter, dispatch, isLoading, error} =
+        useStoreon('chars', 'filter', 'isLoading', 'error');
   // показалось проще хранить выбранного персонажа и показ модалки во внутреннем состоянии
   // в других компонентах они не нужны, а изменяются в одну строку
   const [modalHidden, toggleModal] = useState(true);
@@ -40,25 +40,25 @@ function CharsList() {
 	), []);
 
   return (
-    <>
-      {chars.error ?
-			 <p className="m-0 p-20 text-center text-xl text-gray-600 bg-gray-100">{chars.error}</p> :
-       <Spinner wrapperCssClass="h-full flex flex-col" active={isLoading}>
+		<Spinner wrapperCssClass="h-full flex flex-col" active={isLoading}>
+			{error ?
+			 <p className="m-0 p-20 text-center text-xl text-gray-600 bg-gray-100">{error}</p> :
+			 <>
 				 <List
 					 items={chars.results}
 					 renderItem={renderChar}
 					 cssClass="py-4 px-0 m-0 grid grid-cols-2 gap-4 content-start list-none overflow-auto grow"
 				 />
 				 <Modal hidden={modalHidden} onClose={cb.closeModal}>
-			     <Character item={currentChar} detailed/>
+					 <Character item={currentChar} detailed/>
 				 </Modal>
-         <CharsPaginator
-           charsCount={chars.info?.count} count={chars.info?.pages}
-           current={filter.page} itemClick={cb.goPage}
-         />
-			 </Spinner>
+				 <CharsPaginator
+					 charsCount={chars.info?.count} count={chars.info?.pages}
+					 current={filter.page} itemClick={cb.goPage}
+				 />
+			 </>
 			}
-		</>
+		</Spinner>
   );
 }
 
