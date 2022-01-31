@@ -1,9 +1,11 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useState} from 'react';
 import {useStoreon} from 'storeon/react';
 import Character from './components/character';
 import List from '../../components/list';
 import Modal from '../../components/modal';
-import Pagination from '../../components/pagination';
+// думал сделать его контейнером и вынести туда работу с filter из стора, но по смыслу
+// он больше показался глупым компонентом
+import CharsPaginator from './components/chars-paginator';
 
 function CharsList() {
   const {chars, filter, dispatch} = useStoreon('chars', 'filter');
@@ -12,10 +14,12 @@ function CharsList() {
   const [modalHidden, toggleModal] = useState(true);
   const [currentChar, setCurChar] = useState({});
 
-	const closeModal = useCallback(() => toggleModal(true), []);
-	const goPage = useCallback((n) => (
-		dispatch('filter/set', {...filter, page: n})
-), [filter]);
+	const cb = {
+		closeModal: useCallback(() => toggleModal(true), []),
+		goPage: useCallback((n) => (
+			dispatch('filter/set', {...filter, page: n})
+		), [filter, dispatch]),
+  };
 
 	const renderChar = useCallback((item, i) => (
     // ссылка, потому что она доступнее из коробки чем div
@@ -43,13 +47,13 @@ function CharsList() {
 					 renderItem={renderChar}
 					 cssClass="py-4 px-0 m-0 grid grid-cols-2 gap-4 content-start list-none overflow-auto grow"
 				 />
-				 <Modal hidden={modalHidden} onClose={closeModal}>
+				 <Modal hidden={modalHidden} onClose={cb.closeModal}>
 			     <Character item={currentChar} detailed/>
 				 </Modal>
-         <div className="p-4 flex justify-between items-center gap-4 bg-gray-100">
-					 <Pagination count={chars.info?.pages} current={filter.page} itemClick={goPage}/>
-           <span>Count: {chars.info?.count}</span>
-         </div>
+         <CharsPaginator
+           charsCount={chars.info?.count} count={chars.info?.pages}
+           current={filter.page} itemClick={cb.goPage}
+         />
 			 </>
 			}
 		</>
