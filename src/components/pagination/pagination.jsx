@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import propTypes from 'prop-types';
+import cn from 'classnames';
 import List from '../list';
 
 function Pagination({count, current, itemClick}) {
@@ -24,7 +25,10 @@ function Pagination({count, current, itemClick}) {
 
   const renderItem = useCallback(item => (
 		item ? <button
-             className={item === current ? 'bg-blue-400' : 'cursor-pointer'}
+             className={cn(
+               item === current ? 'bg-blue-400' : 'cursor-pointer',
+               'py-1 px-2 border border-gray-300'
+             )}
              onClick={(item !== current) ? (() => itemClick(item)) : null}
            >{item}</button> : '...'
 	), [current, itemClick]);
@@ -33,7 +37,7 @@ function Pagination({count, current, itemClick}) {
 		<List
 			items={pagList}
 			renderItem={renderItem}
-			cssClass="p-0 m-0 flex gap-2 list-none"
+			cssClass="p-0 m-0 flex flex-wrap gap-2 list-none"
 		/>
 	);
 }
