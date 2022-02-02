@@ -1,3 +1,4 @@
+// Пока не стал разделять стор на модули, поскольку он получился небольшой
 import {createStoreon} from 'storeon';
 
 const charsInit = {
@@ -8,7 +9,6 @@ const charsInit = {
 function charsList(store) {
   store.on('@init', () => ({
 		chars: {...charsInit},
-		filter: {page: 1}
 	}));
 
   store.on('chars/load', async (state, params) => {
@@ -34,12 +34,18 @@ function charsList(store) {
 	});
 
   store.on('chars/update', (state, data) => ({chars: {...charsInit, ...data}}));
+  store.on('chars/waiting', (state, data) => ({isWaiting: data}));
+}
+
+function filter(store) {
+  store.on('@init', () => ({
+		filter: {page: 1}
+	}));
+
   store.on('filter/set', (state, filter) => {
 		store.dispatch('chars/load', filter);
 		return {filter};
 	});
-
-  store.on('chars/waiting', (state, data) => ({isWaiting: data}));
 }
 
 function errors(store) {
@@ -57,5 +63,5 @@ function errors(store) {
 }
 
 export default createStoreon([
-	charsList, errors
+	charsList, filter, errors
 ]);
