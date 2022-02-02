@@ -9,8 +9,8 @@ import Spinner from '../../components/spinner';
 import CharsPaginator from './components/chars-paginator';
 
 function CharsList() {
-  const {chars, filter, dispatch, isLoading, error} =
-        useStoreon('chars', 'filter', 'isLoading', 'error');
+  const {chars, filter, dispatch, isWaiting, error} =
+        useStoreon('chars', 'filter', 'isWaiting', 'error');
   // показалось проще хранить выбранного персонажа и показ модалки во внутреннем состоянии
   // в других компонентах они не нужны, а изменяются в одну строку
   const [modalHidden, toggleModal] = useState(true);
@@ -40,7 +40,7 @@ function CharsList() {
 	), []);
 
   return (
-		<Spinner wrapperCssClass="h-full flex flex-col" active={isLoading}>
+		<Spinner wrapperCssClass="h-full flex flex-col" active={isWaiting}>
 			{error ?
 			 <p className="m-0 p-20 text-center text-xl text-gray-600 bg-gray-100">{error}</p> :
 			 <>

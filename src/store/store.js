@@ -12,7 +12,7 @@ function charsList(store) {
 	}));
 
   store.on('chars/load', async (state, params) => {
-		store.dispatch('loading', true);
+		store.dispatch('chars/waiting', true);
 
 		try {
 			const response = await fetch(
@@ -29,7 +29,7 @@ function charsList(store) {
 		} catch(e) {
 			store.dispatch('errors/load', e);
 		} finally {
-			store.dispatch('loading', false);
+			store.dispatch('chars/waiting', false);
 		}
 	});
 
@@ -39,7 +39,7 @@ function charsList(store) {
 		return {filter};
 	});
 
-  store.on('loading', (state, data) => ({isLoading: data}));
+  store.on('chars/waiting', (state, data) => ({isWaiting: data}));
 }
 
 function errors(store) {
