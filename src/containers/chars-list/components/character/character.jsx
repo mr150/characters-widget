@@ -24,7 +24,7 @@ function Character({item, detailed}) {
 					<p>origin: {item.origin?.name}</p>
 					<p>location: {item.location?.name}</p>
 				</div>
-			) : <strong>{item.name}</strong>
+			) : <b>{item.name}</b>
 			}
 		</div>
 	);
